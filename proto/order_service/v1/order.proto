@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package proto.order_service.v1;
+
+import "common/filter/v1/field.proto";
+import "common/filter/v1/sort.proto";
+import "order_service/v1/model.proto";
+
+option go_package = "github.com/WM1rr0rB8/contractsTest/gen/go/order_service/v1;pb_order_service_v1";
+
+// CreateOrderRequest defines the properties for creating an order.
+message CreateOrderRequest {
+  // User ID.
+  uint64 user_id = 1;
+  // Status of the order (create, accepted, sent, delivered).
+  string status = 2;
+  // Type of product (breakable, unbreakable).
+  string type_product = 3;
+  // Price of the order. Consider using int64 or float instead of string.
+  string price = 4;
+  // What kind of package and amount.
+  uint32 item = 5;
+}
+
+// CreateOrderResponse is the response from creating an order.
+message CreateOrderResponse {
+  // List of packs.
+  repeated Pack packs = 1;
+}
+
+// SwitchStatusOrderRequest to switch the status of an order (create, accepted, sent, delivered).
+message SwitchStatusOrderRequest {
+  // ID of the order.
+  string id = 1;
+  // Status of the order (create, accepted, sent, delivered).
+  string status = 2;
+}
+
+// SwitchStatusOrderResponse is the response to switching an order's status.
+message SwitchStatusOrderResponse {}
+
+// SearchOrderRequest with field.
+message SearchOrderRequest {
+  // Pagination parameters.
+  common.filter.v1.Pagination pagination = 1;
+  // Sorting options.
+  common.filter.v1.Sort sort = 2;
+  // Search query.
+  optional string search = 3;
+  // Filter by id.
+  common.filter.v1.IntFieldFilter id = 4;
+  // Filter by user_id.
+  common.filter.v1.StringFieldFilter user_id = 5;
+  // Filter by number_order.
+  common.filter.v1.IntFieldFilter number_order = 6;
+  // Filter by status.
+  common.filter.v1.BoolFieldFilter status = 7;
+  // Filter by type_product.
+  common.filter.v1.BoolFieldFilter type_product = 8;
+  // Filter by price.
+  common.filter.v1.StringFieldFilter price = 9;
+  // Filter by package.
+  common.filter.v1.IntFieldFilter item = 10;
+  // Filters for created at.
+  oneof created_at_to_filter {
+    // Filter for created at type val.
+    common.filter.v1.IntFieldFilter created_at_val = 11;
+    // Filter for created at type range.
+    common.filter.v1.RangeIntFieldFilter created_at_range = 12;
+  }
+  // Filters for updated at.
+  oneof updated_at_to_filter {
+    // Filter for updated at type val.
+    common.filter.v1.IntFieldFilter updated_at_val = 13;
+    // Filter for updated at type range.
+    common.filter.v1.RangeIntFieldFilter updated_at_range = 14;
+  }
+}
+
+// SearchOrderResponse contains the response with the list of orders.
+message SearchOrderResponse {
+  // List of all orders.
+  repeated Order orders = 1;
+}

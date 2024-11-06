@@ -1,0 +1,134 @@
+syntax = "proto3";
+
+package proto.common.filter.v1;
+
+option go_package = "github.com/WM1rr0rB8/contractsTest/gen/go/common/filter/v1;pb_common_filter";
+
+message Pagination {
+  uint64 limit = 1;
+  uint64 offset = 2;
+}
+
+// Filter for bool values, example: ?exist.op=is&email.val=true.
+message BoolFieldFilter {
+  enum Operator {
+    OPERATOR_UNSPECIFIED = 0;
+    OPERATOR_EQ = 1;
+    OPERATOR_NEQ = 2;
+  }
+  Operator op = 1;
+  bool val = 2;
+}
+
+// Filter for string value, example: ?email.op=eq&email.val=me@example.com.
+message StringFieldFilter {
+  enum Operator {
+    OPERATOR_UNSPECIFIED = 0;
+    OPERATOR_EQ = 1;
+    OPERATOR_NEQ = 2;
+    OPERATOR_LIKE = 3;
+    OPERATOR_ILIKE = 4;
+  }
+  Operator op = 1;
+  string val = 2;
+}
+
+// Filter for number as string (decimal) value, example: ?amount.op=gt&email.val=123.456789.
+message StringNumberFieldFilter {
+  enum Operator {
+    OPERATOR_UNSPECIFIED = 0;
+    OPERATOR_EQ = 1;
+    OPERATOR_NEQ = 2;
+    OPERATOR_LT = 3;
+    OPERATOR_LTE = 4;
+    OPERATOR_GT = 5;
+    OPERATOR_GTE = 6;
+  }
+  Operator op = 1;
+  string val = 2;
+}
+
+// Filter for array of string, example: ?name.op=in&name.val=["ok","not_ok","done"].
+message ArrayStringFieldFilter {
+  enum Operator {
+    OPERATOR_UNSPECIFIED = 0;
+    OPERATOR_IN = 1;
+    OPERATOR_NIN = 2;
+  }
+  Operator op = 1;
+  repeated string val = 2;
+}
+
+// Filter for int values, example: ?age.op=gt&age.val=18.
+message IntFieldFilter {
+  enum Operator {
+    OPERATOR_UNSPECIFIED = 0;
+    OPERATOR_EQ = 1;
+    OPERATOR_NEQ = 2;
+    OPERATOR_LT = 3;
+    OPERATOR_LTE = 4;
+    OPERATOR_GT = 5;
+    OPERATOR_GTE = 6;
+  }
+  Operator op = 1;
+  int64 val = 2;
+}
+
+// Filter for array of int, example: ?age.op=in&age.val=[10,20,30].
+message ArrayIntFieldFilter {
+  enum Operator {
+    OPERATOR_UNSPECIFIED = 0;
+    OPERATOR_IN = 1;
+    OPERATOR_NIN = 2;
+  }
+  Operator op = 1;
+  repeated int64 val = 2;
+}
+
+// Filter for float values, example: ?price.op=gt&price.val=18.33456.
+message FloatFieldFilter {
+  enum Operator {
+    OPERATOR_UNSPECIFIED = 0;
+    OPERATOR_EQ = 1;
+    OPERATOR_NEQ = 2;
+    OPERATOR_LT = 3;
+    OPERATOR_LTE = 4;
+    OPERATOR_GT = 5;
+    OPERATOR_GTE = 6;
+  }
+  Operator op = 1;
+  float val = 2;
+}
+
+// Filter for array of int, example: ?price.op=in&price.val=[18.33456, 3.14, 2.72].
+message ArrayFloatFieldFilter {
+  enum Operator {
+    OPERATOR_UNSPECIFIED = 0;
+    OPERATOR_IN = 1;
+    OPERATOR_NIN = 2;
+  }
+  Operator op = 1;
+  repeated float val = 2;
+}
+
+// Filter for int range, example: ?price.op=range&price.from=100&price.to=1000.
+message RangeIntFieldFilter {
+  enum Operator {
+    OPERATOR_UNSPECIFIED = 0;
+    OPERATOR_RANGE = 1;
+  }
+  Operator op = 1;
+  int64 from = 2;
+  int64 to = 3;
+}
+
+// Filter for string range, example: ?amount.op=range&price.from=987.834&price.to=3987.834.
+message RangeStringFieldFilter {
+  enum Operator {
+    OPERATOR_UNSPECIFIED = 0;
+    OPERATOR_RANGE = 1;
+  }
+  Operator op = 1;
+  string from = 2;
+  string to = 3;
+}

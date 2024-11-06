@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package proto.order_service.v1;
+
+import "order_service/v1/order.proto";
+
+option go_package = "github.com/WM1rr0rB8/contractsTest/gen/go/order_service/v1;pb_order_service_v1";
+
+// OrderService defines the RPC methods for order management.
+service OrderService {
+  // RPC to search orders.
+  rpc SearchOrder(SearchOrderRequest) returns (SearchOrderResponse);
+  // RPC to create an order.
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
+  // RPC to switch the status of an order.
+  rpc SwitchStatusOrder(SwitchStatusOrderRequest) returns (SwitchStatusOrderResponse);
+}
